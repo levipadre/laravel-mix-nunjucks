@@ -96,9 +96,9 @@ class RenderNunjucksTask extends Task {
    */
   renderAll() {
     const patterns = [
-      this.from.path(),
-      '!' + path.posix.join(this.base, '**/_**/*'),
-      '!' + path.posix.join(this.base, '**/_*'),
+      this.from.path().replace(/\\/g, '/'),
+      '!' + path.posix.join(this.base.replace(/\\/g, '/'), '**/_**/*'),
+      '!' + path.posix.join(this.base.replace(/\\/g, '/'), '**/_*'),
     ];
     globby.sync(patterns, { onlyFiles: true })
       .map(filePath => this.handle('change', new File(filePath)));
